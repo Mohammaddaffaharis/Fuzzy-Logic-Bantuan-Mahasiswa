@@ -18,7 +18,7 @@ def penghasilanTinggi(penghasilan):
     elif(penghasilan <= min):
         return 0
 def penghasilanRendah(penghasilan):
-    max = 8
+    max = 9.26
     min = 4
     if(penghasilan > max):
         return 0
@@ -90,7 +90,7 @@ def pengeluaranRendah(pengeluaran):
 def pengeluaranStandar(pengeluaran):
     max = 6
     min = 4
-    maxUnCom = 8
+    maxUnCom = 9.26
     minUnCom = 2
     if(pengeluaran <= minUnCom or pengeluaran > maxUnCom):
         return 0
