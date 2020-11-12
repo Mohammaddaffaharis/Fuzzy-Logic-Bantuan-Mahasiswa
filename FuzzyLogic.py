@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import math
 file = pd.read_excel('Mahasiswa.xls')
 pengeluaran = []
 penghasilan = []
@@ -19,7 +20,7 @@ def penghasilanTinggi(penghasilan):
         return 0
 def penghasilanRendah(penghasilan):
     max = 9.26
-    min = 4
+    min = 6
     if(penghasilan > max):
         return 0
     elif(penghasilan > min and penghasilan <= max):
@@ -30,7 +31,7 @@ def penghasilanStandar(penghasilan):
     max = 11
     min = 8
     maxUnCom = 15
-    minUnCom = 5
+    minUnCom = 6
     if(penghasilan <= minUnCom or penghasilan > maxUnCom):
         return 0
     elif(penghasilan > minUnCom and penghasilan <= min):
@@ -45,26 +46,26 @@ def klasifikasiPenghasilan(penghasilan):
     result.append(penghasilanStandar(penghasilan))
     result.append(penghasilanTinggi(penghasilan))
     return result
-def printPengeluarannPenghasilan():
-    x = [3, 4.5, 5, 5.5, 7.5, 8, 9, 10]
-    y1 = [0, 0, 0, 0, 0, 1, 1, 1]
-    y2 = [1, 1, 1, 0, 0, 0, 0, 0]
-    y3 = [0, 0, 0, 1, 1, 0, 0, 0]
-    plt.plot(x, y1, label='Pengeluaran Tinggi')
-    plt.plot(x, y2, label='Pengeluaran Rendah')
-    plt.plot(x, y3, label='Pengeluaran Standar')
-    plt.title('Pengeluaran')
-    plt.legend()
-    plt.show()
-
-    x = [3, 5, 7, 7.5, 13.5, 14, 17, 19]
-    y1 = [0, 0, 0, 0, 0, 1, 1, 1]
-    y2 = [1, 1, 1, 0, 0, 0, 0, 0]
-    y3 = [0, 0, 0, 1, 1, 0, 0, 0]
-    plt.plot(x, y1, label='Penghasilan Tinggi')
-    plt.plot(x, y2, label='Penghasilan Rendah')
-    plt.plot(x, y3, label='Penghasilan Standar')
-    plt.title('Penghasilan')
+def printPengeluaranPenghasilan():
+    x1 = [0,6,9.26,20]
+    y1 = [1,1,0,0]
+    x2 = [0,6,8,11,15,20]
+    y2 = [0,0,1,1,0,0]
+    x3 = [0,12,16,20]
+    y3 = [0,0, 1,1]
+    x4 = [0, 6, 8, 20]
+    y4 = [0, 0, 1, 1]
+    x5 = [0, 2, 5, 0]
+    y5 = [1, 1, 0, 0]
+    x6 = [0, 2, 4, 6, 9.26, 20]
+    y6 = [0, 0, 1, 1, 0, 0]
+    plt.plot(x1, y1, label='Penghasilan Rendah')
+    plt.plot(x2, y2, label='Penghasilan Standar')
+    plt.plot(x3, y3, label='Penghasilan Tinggi')
+    plt.plot(x4, y4, label='Pengeluaran Tinggi')
+    plt.plot(x5, y5, label='Pengeluaran Rendah')
+    plt.plot(x6, y6, label='Pengeluaran Standar')
+    plt.title('Pengeluaran dan Penghasilan')
     plt.legend()
     plt.show()
 
@@ -106,7 +107,6 @@ def klasifikasiPengeluaran(pengeluaran):
     result.append(pengeluaranStandar(pengeluaran))
     result.append(pengeluaranTinggi(pengeluaran))
     return result
-
 def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
     upper = fuzzyPenghasilan[2]
     middle = fuzzyPenghasilan[1]
@@ -146,19 +146,21 @@ def defuzzyfication(inference):
     accepted = inference[0]
     considered = inference[1]
     rejected = inference[2]
-    return ((accepted * 100) + (considered * 60) + (rejected * 40)) / (accepted + considered + rejected)
+    return ((accepted * 100) + (considered * 53.7) + (rejected * 23.48)) / (accepted + considered + rejected)
 
-hasilAkhir = []
-for i in range(100):
-    fuzzypenghasilan = klasifikasiPenghasilan(penghasilan[i])
-    fuzzypengeluaran = klasifikasiPengeluaran(pengeluaran[i])
-    inference = inferenceTable(fuzzypenghasilan,fuzzypengeluaran)
-    #print(inference)
-    defuzz = defuzzyfication(inference)
-    #print(defuzz)
-    hasilAkhir.append({'id': i+1,'hasil': defuzz})
-srt = sorted(hasilAkhir, key=lambda x:x['hasil'],reverse=True)
-arr = []
-for i in range(20):
-    arr.append(srt[i])
-print(arr)
+def main():
+    hasilAkhir = []
+    for i in range(100):
+        fuzzypenghasilan = klasifikasiPenghasilan(penghasilan[i])
+        fuzzypengeluaran = klasifikasiPengeluaran(pengeluaran[i])
+        inference = inferenceTable(fuzzypenghasilan, fuzzypengeluaran)
+        defuzz = defuzzyfication(inference)
+        hasilAkhir.append({'id': i + 1, 'hasil': defuzz})
+    srt = sorted(hasilAkhir, key=lambda x: x['hasil'], reverse=True)
+    arr = []
+    for i in range(20):
+        arr.append(srt[i])
+    print(arr)
+
+printPengeluaranPenghasilan()
+main()
