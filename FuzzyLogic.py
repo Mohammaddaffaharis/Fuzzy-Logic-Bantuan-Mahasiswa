@@ -9,8 +9,8 @@ for i in file.index:
 
 #upper,middle,bottom
 def penghasilanTinggi(penghasilan):
-    max = 12
-    min = 10.5
+    max = 16
+    min = 12
     if(penghasilan > max):
         return 1
     elif(penghasilan > min and penghasilan <= max):
@@ -19,7 +19,7 @@ def penghasilanTinggi(penghasilan):
         return 0
 def penghasilanRendah(penghasilan):
     max = 8
-    min = 6.5
+    min = 4
     if(penghasilan > max):
         return 0
     elif(penghasilan > min and penghasilan <= max):
@@ -27,10 +27,10 @@ def penghasilanRendah(penghasilan):
     elif(penghasilan <= min):
         return 1
 def penghasilanStandar(penghasilan):
-    max = 10
-    min = 8.5
-    maxUnCom = 11.5
-    minUnCom = 7
+    max = 11
+    min = 8
+    maxUnCom = 15
+    minUnCom = 5
     if(penghasilan <= minUnCom or penghasilan > maxUnCom):
         return 0
     elif(penghasilan > minUnCom and penghasilan <= min):
@@ -70,8 +70,8 @@ def printPengeluarannPenghasilan():
 
 # high,average,low
 def pengeluaranTinggi(pengeluaran):
-    max = 9
-    min = 8
+    max = 8
+    min = 6
     if(pengeluaran > max):
         return 1
     elif(pengeluaran > min and pengeluaran <= max):
@@ -79,8 +79,8 @@ def pengeluaranTinggi(pengeluaran):
     elif(pengeluaran <= min):
         return 0
 def pengeluaranRendah(pengeluaran):
-    max = 6
-    min = 4.5
+    max = 5
+    min = 2
     if(pengeluaran > max):
         return 0
     elif(pengeluaran > min and pengeluaran <= max):
@@ -88,10 +88,10 @@ def pengeluaranRendah(pengeluaran):
     elif(pengeluaran <= min):
         return 1
 def pengeluaranStandar(pengeluaran):
-    max = 7.5
-    min = 6.5
-    maxUnCom = 8.5
-    minUnCom = 5
+    max = 6
+    min = 4
+    maxUnCom = 8
+    minUnCom = 2
     if(pengeluaran <= minUnCom or pengeluaran > maxUnCom):
         return 0
     elif(pengeluaran > minUnCom and pengeluaran <= min):
@@ -133,7 +133,7 @@ def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
         tempNilai = min(arrTable[j][0], arrTable[j][1])
         if (j == 1) or (j == 2) :
             arrAccepted.append(tempNilai)
-        elif (j == 0) or (j == 5) :
+        elif (j == 0)  or (j == 5):
             arrConsidered.append(tempNilai)
         elif (j == 3) or (j == 4)  or (j == 6) or (j == 7) or (j == 8):
             arrRejected.append(tempNilai)
