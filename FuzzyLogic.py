@@ -113,25 +113,30 @@ def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
     rejected = max(arrRejected)
 
     return accepted, considered, rejected
-def defuzzyfication(inference):
+def defuzzification(inference):
     accepted = inference[0]
     considered = inference[1]
     rejected = inference[2]
     return ((accepted * 100) + (considered * 53.7) + (rejected * 23.48)) / (accepted + considered + rejected)
 
-def main():
+def readExcel():
     file = pd.read_excel('Mahasiswa.xls')
     pengeluaran = []
     penghasilan = []
     for i in file.index:
         pengeluaran.append(file['Pengeluaran'][i])
         penghasilan.append(file['Penghasilan'][i])
+    return penghasilan,pengeluaran
+def main():
+    file = readExcel()
+    penghasilan = file[0]
+    pengeluaran = file[1]
     hasilAkhir = []
     for i in range(100):
         fuzzypenghasilan = klasifikasiPenghasilan(penghasilan[i])
         fuzzypengeluaran = klasifikasiPengeluaran(pengeluaran[i])
         inference = inferenceTable(fuzzypenghasilan, fuzzypengeluaran)
-        defuzz = defuzzyfication(inference)
+        defuzz = defuzzification(inference)
         hasilAkhir.append({'Baris': i + 2, 'Id': i + 1,'hasil': defuzz})
     srt = sorted(hasilAkhir, key=lambda x: x['hasil'], reverse=True)
     createExcel(srt)
@@ -167,4 +172,4 @@ def createExcel(data):
     df.to_excel(writer, sheet_name = 'Sheet1')
     writer.save()
 printGraph()
-#main()
+main()
