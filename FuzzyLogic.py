@@ -144,7 +144,7 @@ def printGraph():
     y3 = [0,0, 1,1]
     x4 = [0, 6, 8, 20]
     y4 = [0, 0, 1, 1]
-    x5 = [0, 2, 5, 0]
+    x5 = [0, 2, 5, 20]
     y5 = [1, 1, 0, 0]
     x6 = [0, 2, 4, 6, 9.26, 20]
     y6 = [0, 0, 1, 1, 0, 0]
@@ -155,7 +155,10 @@ def printGraph():
     plt.plot(x4, y4, label='Pengeluaran Tinggi')
     plt.plot(x5, y5, label='Pengeluaran Rendah')
     plt.plot(x6, y6, label='Pengeluaran Standar')
-    plt.title('Pengeluaran')
+    #plt.axvline(x=23.48, color='red', label='Rejected')
+    #plt.axvline(x=53.7, color='yellow', label='Considered')
+    #plt.axvline(x=100, color='green', label='Accepted')
+    plt.title('Penghasilan dan Pengeluaran')
     plt.legend()
     plt.show()
 def createExcel(data):
@@ -163,5 +166,5 @@ def createExcel(data):
     writer = pd.ExcelWriter('Bantuan.xls')
     df.to_excel(writer, sheet_name = 'Sheet1')
     writer.save()
-    
-main()
+printGraph()
+#main()
