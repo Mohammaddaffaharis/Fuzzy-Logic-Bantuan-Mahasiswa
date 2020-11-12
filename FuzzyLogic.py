@@ -132,12 +132,9 @@ def main():
         fuzzypengeluaran = klasifikasiPengeluaran(pengeluaran[i])
         inference = inferenceTable(fuzzypenghasilan, fuzzypengeluaran)
         defuzz = defuzzyfication(inference)
-        hasilAkhir.append({'id': i + 1, 'hasil': defuzz})
+        hasilAkhir.append({'Baris': i + 2, 'Id': i + 1,'hasil': defuzz})
     srt = sorted(hasilAkhir, key=lambda x: x['hasil'], reverse=True)
-    arr = []
-    for i in range(20):
-        arr.append(srt[i])
-    print(arr)
+    createExcel(srt)
 def printGraph():
     x1 = [0,6,9.26,20]
     y1 = [1,1,0,0]
@@ -161,6 +158,10 @@ def printGraph():
     plt.title('Pengeluaran')
     plt.legend()
     plt.show()
-
-#printGraph()
+def createExcel(data):
+    df = pd.DataFrame(data)
+    writer = pd.ExcelWriter('Bantuan.xls')
+    df.to_excel(writer, sheet_name = 'Sheet1')
+    writer.save()
+    
 main()
