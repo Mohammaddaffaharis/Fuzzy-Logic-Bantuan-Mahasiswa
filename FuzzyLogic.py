@@ -9,8 +9,8 @@ for i in file.index:
 
 #upper,middle,bottom
 def penghasilanTinggi(penghasilan):
-    max = 19
-    min = 12
+    max = 12
+    min = 10.5
     if(penghasilan > max):
         return 1
     elif(penghasilan > min and penghasilan <= max):
@@ -18,8 +18,8 @@ def penghasilanTinggi(penghasilan):
     elif(penghasilan <= min):
         return 0
 def penghasilanRendah(penghasilan):
-    max = 7
-    min = 3
+    max = 8
+    min = 6.5
     if(penghasilan > max):
         return 0
     elif(penghasilan > min and penghasilan <= max):
@@ -27,9 +27,9 @@ def penghasilanRendah(penghasilan):
     elif(penghasilan <= min):
         return 1
 def penghasilanStandar(penghasilan):
-    max = 13
-    min = 8
-    maxUnCom = 12
+    max = 10
+    min = 8.5
+    maxUnCom = 11.5
     minUnCom = 7
     if(penghasilan <= minUnCom or penghasilan > maxUnCom):
         return 0
@@ -70,8 +70,8 @@ def printPengeluarannPenghasilan():
 
 # high,average,low
 def pengeluaranTinggi(pengeluaran):
-    max = 10
-    min = 9
+    max = 9
+    min = 8
     if(pengeluaran > max):
         return 1
     elif(pengeluaran > min and pengeluaran <= max):
@@ -79,8 +79,8 @@ def pengeluaranTinggi(pengeluaran):
     elif(pengeluaran <= min):
         return 0
 def pengeluaranRendah(pengeluaran):
-    max = 5
-    min = 3
+    max = 6
+    min = 4.5
     if(pengeluaran > max):
         return 0
     elif(pengeluaran > min and pengeluaran <= max):
@@ -88,9 +88,9 @@ def pengeluaranRendah(pengeluaran):
     elif(pengeluaran <= min):
         return 1
 def pengeluaranStandar(pengeluaran):
-    max = 8
-    min = 6
-    maxUnCom = 9
+    max = 7.5
+    min = 6.5
+    maxUnCom = 8.5
     minUnCom = 5
     if(pengeluaran <= minUnCom or pengeluaran > maxUnCom):
         return 0
@@ -114,7 +114,6 @@ def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
     high = fuzzyPengeluaran[2]
     average = fuzzyPengeluaran[1]
     low = fuzzyPengeluaran[0]
-
     arrAccepted = []
     arrConsidered = []
     arrRejected = []
@@ -129,16 +128,15 @@ def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
         [upper, average],
         [upper, high]
     ]
-
+    tempNilai = 0
     for j in range(9):
         tempNilai = min(arrTable[j][0], arrTable[j][1])
-        if (j == 1) or (j == 2)  :
+        if (j == 1) or (j == 2) :
             arrAccepted.append(tempNilai)
-        elif (j == 0)   or (j == 5) or (j == 4):
+        elif (j == 0) or (j == 5) :
             arrConsidered.append(tempNilai)
-        elif (j == 6) or (j == 7) or (j == 8)  or (j == 3)  :
+        elif (j == 3) or (j == 4)  or (j == 6) or (j == 7) or (j == 8):
             arrRejected.append(tempNilai)
-
     accepted = max(arrAccepted)
     considered = max(arrConsidered)
     rejected = max(arrRejected)
@@ -153,10 +151,11 @@ def defuzzyfication(inference):
 hasilAkhir = []
 for i in range(100):
     fuzzypenghasilan = klasifikasiPenghasilan(penghasilan[i])
-    print(fuzzypenghasilan)
     fuzzypengeluaran = klasifikasiPengeluaran(pengeluaran[i])
     inference = inferenceTable(fuzzypenghasilan,fuzzypengeluaran)
+    #print(inference)
     defuzz = defuzzyfication(inference)
+    #print(defuzz)
     hasilAkhir.append({'id': i+1,'hasil': defuzz})
 srt = sorted(hasilAkhir, key=lambda x:x['hasil'],reverse=True)
 arr = []
