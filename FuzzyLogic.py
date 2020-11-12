@@ -1,14 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import math
-file = pd.read_excel('Mahasiswa.xls')
-pengeluaran = []
-penghasilan = []
-for i in file.index:
-    pengeluaran.append(file['Pengeluaran'][i])
-    penghasilan.append(file['Penghasilan'][i])
 
-#upper,middle,bottom
+# Penghasilan (upper,middle,bottom)
 def penghasilanTinggi(penghasilan):
     max = 16
     min = 12
@@ -46,30 +39,8 @@ def klasifikasiPenghasilan(penghasilan):
     result.append(penghasilanStandar(penghasilan))
     result.append(penghasilanTinggi(penghasilan))
     return result
-def printPengeluaranPenghasilan():
-    x1 = [0,6,9.26,20]
-    y1 = [1,1,0,0]
-    x2 = [0,6,8,11,15,20]
-    y2 = [0,0,1,1,0,0]
-    x3 = [0,12,16,20]
-    y3 = [0,0, 1,1]
-    x4 = [0, 6, 8, 20]
-    y4 = [0, 0, 1, 1]
-    x5 = [0, 2, 5, 0]
-    y5 = [1, 1, 0, 0]
-    x6 = [0, 2, 4, 6, 9.26, 20]
-    y6 = [0, 0, 1, 1, 0, 0]
-    plt.plot(x1, y1, label='Penghasilan Rendah')
-    plt.plot(x2, y2, label='Penghasilan Standar')
-    plt.plot(x3, y3, label='Penghasilan Tinggi')
-    plt.plot(x4, y4, label='Pengeluaran Tinggi')
-    plt.plot(x5, y5, label='Pengeluaran Rendah')
-    plt.plot(x6, y6, label='Pengeluaran Standar')
-    plt.title('Pengeluaran dan Penghasilan')
-    plt.legend()
-    plt.show()
 
-# high,average,low
+# Pengeluaran (high,average,low)
 def pengeluaranTinggi(pengeluaran):
     max = 8
     min = 6
@@ -107,6 +78,7 @@ def klasifikasiPengeluaran(pengeluaran):
     result.append(pengeluaranStandar(pengeluaran))
     result.append(pengeluaranTinggi(pengeluaran))
     return result
+
 def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
     upper = fuzzyPenghasilan[2]
     middle = fuzzyPenghasilan[1]
@@ -128,15 +100,14 @@ def inferenceTable(fuzzyPenghasilan, fuzzyPengeluaran):
         [upper, average],
         [upper, high]
     ]
-    tempNilai = 0
     for j in range(9):
-        tempNilai = min(arrTable[j][0], arrTable[j][1])
+        nilai = min(arrTable[j][0], arrTable[j][1])
         if (j == 1) or (j == 2) :
-            arrAccepted.append(tempNilai)
+            arrAccepted.append(nilai)
         elif (j == 0)  or (j == 5):
-            arrConsidered.append(tempNilai)
+            arrConsidered.append(nilai)
         elif (j == 3) or (j == 4)  or (j == 6) or (j == 7) or (j == 8):
-            arrRejected.append(tempNilai)
+            arrRejected.append(nilai)
     accepted = max(arrAccepted)
     considered = max(arrConsidered)
     rejected = max(arrRejected)
@@ -149,6 +120,12 @@ def defuzzyfication(inference):
     return ((accepted * 100) + (considered * 53.7) + (rejected * 23.48)) / (accepted + considered + rejected)
 
 def main():
+    file = pd.read_excel('Mahasiswa.xls')
+    pengeluaran = []
+    penghasilan = []
+    for i in file.index:
+        pengeluaran.append(file['Pengeluaran'][i])
+        penghasilan.append(file['Penghasilan'][i])
     hasilAkhir = []
     for i in range(100):
         fuzzypenghasilan = klasifikasiPenghasilan(penghasilan[i])
@@ -161,6 +138,29 @@ def main():
     for i in range(20):
         arr.append(srt[i])
     print(arr)
+def printGraph():
+    x1 = [0,6,9.26,20]
+    y1 = [1,1,0,0]
+    x2 = [0,6,8,11,15,20]
+    y2 = [0,0,1,1,0,0]
+    x3 = [0,12,16,20]
+    y3 = [0,0, 1,1]
+    x4 = [0, 6, 8, 20]
+    y4 = [0, 0, 1, 1]
+    x5 = [0, 2, 5, 0]
+    y5 = [1, 1, 0, 0]
+    x6 = [0, 2, 4, 6, 9.26, 20]
+    y6 = [0, 0, 1, 1, 0, 0]
 
-printPengeluaranPenghasilan()
+    plt.plot(x1, y1, label='Penghasilan Rendah')
+    plt.plot(x2, y2, label='Penghasilan Standar')
+    plt.plot(x3, y3, label='Penghasilan Tinggi')
+    plt.plot(x4, y4, label='Pengeluaran Tinggi')
+    plt.plot(x5, y5, label='Pengeluaran Rendah')
+    plt.plot(x6, y6, label='Pengeluaran Standar')
+    plt.title('Pengeluaran')
+    plt.legend()
+    plt.show()
+
+#printGraph()
 main()
