@@ -139,7 +139,10 @@ def main():
         defuzz = defuzzification(inference)
         hasilAkhir.append({'Baris': i + 2, 'Id': i + 1,'hasil': defuzz})
     srt = sorted(hasilAkhir, key=lambda x: x['hasil'], reverse=True)
-    createExcel(srt)
+    output = []
+    for i in range(20):
+        output.append(srt[i])
+    createExcel(output)
 def printGraph():
     x1 = [0,6,9.26,20]
     y1 = [1,1,0,0]
